@@ -3,11 +3,7 @@ import numpy
 from numba import jit
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg, NavigationToolbar2Tk)
-# Implement the default Matplotlib key bindings.
-from matplotlib.backend_bases import key_press_handler
-from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
-import numpy as np
 
 
 root = tkinter.Tk()
@@ -36,17 +32,10 @@ for row_index, Rc in enumerate(numpy.linspace(-2, 1, num=rows)):
         result[row_index, columns_index] = res
 fig = plt.figure(dpi=100)
 plt.imshow(result.T, cmap='hot', interpolation='bilinear', extent=[-2, 1, -1, 1])
-# plt.xlabel('Re')
-# plt.ylabel('In')
-# plt.show()
-
-#
-# fig = Figure(figsize=(5, 4), dpi=100)
-# t = np.arange(0, 3, .01)
-# fig.add_subplot(111).plot(t, 2 * np.sin(2 * np.pi * t))
-
 
 canvas = FigureCanvasTkAgg(fig, master=root)  # A tk.DrawingArea.
 canvas.draw()
 canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
+toolbar = NavigationToolbar2Tk(canvas, root)
+toolbar.update()
 tkinter.mainloop()
